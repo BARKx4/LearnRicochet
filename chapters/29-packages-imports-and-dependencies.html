@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 29: Packages, Imports, And Dependencies | Learn Ricochet</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn Ricochet — A comprehensive guide to Ricochet, a modern, pure-postfix, stack-based programming language.">
+    <meta name="keywords" content="Ricochet, programming language, Forth, postfix, concatenative, stack-based, bytecode VM, OOP, web MVC, PostgreSQL">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="https://try.ricochet.today" class="brand">
+                <img src="../assets/logo.png" alt="Ricochet Logo" class="brand-logo">
+                <span class="brand-name">RICOCHET</span>
+                <span class="brand-sub">LEARN</span>
+            </a>
+            <nav class="nav-links-wrapper">
+                <ul class="nav-links">
+                    <li><a href="https://try.ricochet.today#features" class="nav-link">Features</a></li>
+                    <li><a href="https://try.ricochet.today#playground" class="nav-link">Playground</a></li>
+                    <li><a href="https://try.ricochet.today/reference.html" class="nav-link">Docs</a></li>
+                    <li><a href="../index.html" class="nav-link" style="color: var(--text-primary);">Guide</a></li>
+                    <li><a href="https://github.com/BARKx4/Ricochet" target="_blank" class="nav-link">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="nav-cta" onclick="window.location.href='https://try.ricochet.today#playground'">TRY PLAYGROUND</button>
+            <button class="mobile-menu-btn" id="mobile-menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar-nav">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="sidebar-search" class="search-input" placeholder="Search topics...">
+            </div>
+            
+            <h2>Start</h2>
+<ul>
+  <li><a href="../index.html">Learn Ricochet</a></li>
+  <li><a href="../manual-map.html">Learn Ricochet Manual Map</a></li>
+</ul>
+<h2>Start Here</h2>
+<ul>
+  <li><a href="../start-here/00-what-is-ricochet-for.html">What Ricochet Is For</a></li>
+  <li><a href="../start-here/01-how-postfix-reads.html">How Postfix Reads</a></li>
+  <li><a href="../start-here/02-the-stack-as-a-workbench.html">The Stack as a Workbench</a></li>
+  <li><a href="../start-here/03-how-to-use-this-guide.html">How to Use This Guide</a></li>
+</ul>
+<h2>Chapters</h2>
+<ul>
+  <li><a href="../chapters/00-orientation.html">Chapter 00: Welcome to Ricochet</a></li>
+  <li><a href="../chapters/01-hello-world.html">Chapter 01: Your First Program</a></li>
+  <li><a href="../chapters/02-running-ricochet.html">Chapter 02: Running Code and Getting Feedback</a></li>
+  <li><a href="../chapters/03-postfix-stack-thinking.html">Chapter 03: How Postfix Reads</a></li>
+  <li><a href="../chapters/04-values-and-literals.html">Chapter 04: Values, Literals, and Inspection</a></li>
+  <li><a href="../chapters/05-bindings-and-data.html">Chapter 05: Names, Bindings, and Small Data</a></li>
+  <li><a href="../chapters/06-numbers-math-and-truth.html">Chapter 06: Numbers, Math, and Truth</a></li>
+  <li><a href="../chapters/07-strings-json-and-regex.html">Chapter 07: Strings, JSON, and Regex</a></li>
+  <li><a href="../chapters/08-collections.html">Chapter 08: Collections</a></li>
+  <li><a href="../chapters/09-results-and-errors.html">Chapter 09: Results and Errors</a></li>
+  <li><a href="../chapters/10-control-flow-functions-and-blocks.html">Chapter 10: Making Decisions and Reusing Code</a></li>
+  <li><a href="../chapters/11-oop-and-dispatch.html">Chapter 11: OOP and Dispatch</a></li>
+  <li><a href="../chapters/12-testing-linting-and-formatting.html">Chapter 12: Testing, Linting, and Formatting</a></li>
+  <li><a href="../chapters/13-introspection-and-debug-basics.html">Chapter 13: Introspection And Debug Basics</a></li>
+  <li><a href="../chapters/14-date-time-and-duration.html">Chapter 14: Date, Time, And Duration</a></li>
+  <li><a href="../chapters/15-async-and-tasks.html">Chapter 15: Async And Tasks</a></li>
+  <li><a href="../chapters/16-capabilities-and-sandboxing.html">Chapter 16: Capabilities And Sandboxing</a></li>
+  <li><a href="../chapters/17-files-workspaces-env-and-secrets.html">Chapter 17: Files, Workspaces, Environment, Config, And Secrets</a></li>
+  <li><a href="../chapters/18-http-and-streams.html">Chapter 18: HTTP And Streams</a></li>
+  <li><a href="../chapters/19-tcp-and-websocket-sockets.html">Chapter 19: TCP And WebSocket Sockets</a></li>
+  <li><a href="../chapters/20-processes-and-ptys.html">Chapter 20: Processes And PTYs</a></li>
+  <li><a href="../chapters/21-terminal-ui.html">Chapter 21: Terminal UI</a></li>
+  <li><a href="../chapters/22-webview-and-desktop-gui.html">Chapter 22: Webview And Desktop GUI</a></li>
+  <li><a href="../chapters/23-mvc-first-app.html">Chapter 23: MVC First App</a></li>
+  <li><a href="../chapters/24-routes-controllers-and-responses.html">Chapter 24: Routes, Controllers, And Responses</a></li>
+  <li><a href="../chapters/25-templates-static-assets-and-uploads.html">Chapter 25: Templates, Static Assets, And Uploads</a></li>
+  <li><a href="../chapters/26-data-active-record-and-migrations.html">Chapter 26: Data, Active Record, And Migrations</a></li>
+  <li><a href="../chapters/27-sessions-forms-auth-and-passwords.html">Chapter 27: Sessions, Forms, Auth, And Passwords</a></li>
+  <li><a href="../chapters/28-ai-capabilities-and-ai-package.html">Chapter 28: AI Capabilities And The AI Package</a></li>
+  <li><a href="../chapters/29-packages-imports-and-dependencies.html" aria-current="page" class="active">Chapter 29: Packages, Imports, And Dependencies</a></li>
+  <li><a href="../chapters/30-registries-publish-yank-and-mirror.html">Chapter 30: Registries, Publish, Yank, And Mirror</a></li>
+  <li><a href="../chapters/31-macros-and-expansion.html">Chapter 31: Macros And Expansion</a></li>
+  <li><a href="../chapters/32-debugger-dap-lsp-and-editor-tools.html">Chapter 32: Debugger, DAP, LSP, And Editor Tools</a></li>
+  <li><a href="../chapters/33-bytecode-images-and-source-emission.html">Chapter 33: Bytecode, Images, And Source Emission</a></li>
+  <li><a href="../chapters/34-packaging-release-and-updates.html">Chapter 34: Packaging, Release, And Updates</a></li>
+  <li><a href="../chapters/35-capstone-cli-tool.html">Chapter 35: Capstone CLI Tool</a></li>
+  <li><a href="../chapters/36-capstone-tui-dashboard.html">Chapter 36: Capstone TUI Dashboard</a></li>
+  <li><a href="../chapters/37-capstone-mvc-app.html">Chapter 37: Capstone MVC App</a></li>
+  <li><a href="../chapters/38-capstone-packaged-gui-app.html">Chapter 38: Capstone Packaged GUI App</a></li>
+</ul>
+<h2>Concepts</h2>
+<ul>
+  <li><a href="../concepts/application-surfaces.html">Concept: Application Surfaces</a></li>
+  <li><a href="../concepts/bindings-vs-stack-juggling.html">Concept: Bindings vs. Stack Juggling</a></li>
+  <li><a href="../concepts/capabilities-and-sandboxing.html">Concept: Capabilities and Sandboxing</a></li>
+  <li><a href="../concepts/postfix-evaluation.html">Concept: Postfix Evaluation</a></li>
+  <li><a href="../concepts/results-and-errors.html">Concept: Results and Errors</a></li>
+  <li><a href="../concepts/stack-effects.html">Concept: Stack Effects</a></li>
+</ul>
+<h2>How-To</h2>
+<ul>
+  <li><a href="../how-to/choose-a-data-shape.html">How to Choose a Data Shape</a></li>
+  <li><a href="../how-to/install-and-run.html">How to Install and Run Ricochet</a></li>
+  <li><a href="../how-to/read-diagnostics.html">How to Read Diagnostics</a></li>
+  <li><a href="../how-to/use-examples.html">How to Use the Examples</a></li>
+</ul>
+<h2>Appendices</h2>
+<ul>
+  <li><a href="../appendices/a-word-catalog.html">Appendix A: Word Groups at a Glance</a></li>
+  <li><a href="../appendices/b-cli-command-catalog.html">Appendix B: CLI Command Catalog</a></li>
+  <li><a href="../appendices/c-capability-flags.html">Appendix C: Capability Flags</a></li>
+  <li><a href="../appendices/d-syntax-guardrails.html">Appendix D: Syntax Guardrails</a></li>
+  <li><a href="../appendices/e-troubleshooting.html">Appendix E: Troubleshooting</a></li>
+  <li><a href="../appendices/f-glossary.html">Appendix F: Glossary</a></li>
+</ul>
+
+        </nav>
+        
+        <!-- Main Content -->
+        <main>
+            
+      <h1>Chapter 29: Packages, Imports, And Dependencies</h1>
+<blockquote>
+<p>Part V: Packages, Registries, Macros, Tooling, and Release</p>
+</blockquote>
+<h2 id="why-this-chapter-matters">Why this chapter matters</h2>
+<p>Packages let Ricochet projects reuse code. Imports, manifests, locks, verification, and audit commands keep reuse understandable and reproducible.</p>
+<h2 id="what-you-will-build">What you will build</h2>
+<p>You will build and consume a local math package. The app will import package
+code statically, load the same module dynamically, call exported package
+functions through a module map, read an exported variable, and verify the
+generated dependency lockfile.</p>
+<h2 id="concepts-in-plain-english">Concepts in plain English</h2>
+<p>A package is reusable code with metadata. An import loads code. A lockfile records the resolved dependency graph.</p>
+<p>The chapter uses these concepts:</p>
+<ul>
+<li>Dependencies, package manifests, and lockfiles.</li>
+<li>Static imports for ordinary compile-time module sharing.</li>
+<li>Dynamic runtime imports with <code>import_dynamic</code>, <code>module_call</code>, and
+<code>module_get</code>.</li>
+<li>Integrity and path containment.</li>
+<li>Local path dependencies versus registry dependencies.</li>
+</ul>
+<h2 id="vocabulary-and-commands">Vocabulary and commands</h2>
+<p>Primary coverage: dependency CLI family, package manifests, <code>ricochet.lock</code>,
+static package imports, <code>import_dynamic</code>, <code>module_call</code>, and <code>module_get</code>.</p>
+<h2 id="guided-example">Guided example</h2>
+<p>Open <code>examples/learn/29-packages/local_math_package</code>. The app manifest declares
+a local dependency by alias:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>[package]
+name = &quot;learn_local_math_package&quot;
+version = &quot;0.1.0&quot;
+
+[dependencies.math_tools]
+path = &quot;./packages/math_tools&quot;
+version = &quot;^0.1.0&quot;
+</code></pre>
+<p>The package has its own manifest:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>[package]
+name = &quot;@learn/math_tools&quot;
+version = &quot;0.1.0&quot;
+description = &quot;Tiny local package used by Learn Ricochet Chapter 29.&quot;
+</code></pre>
+<p>Its module exports one variable and three functions:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>&quot;learn-math-tools&quot; math_package_name var
+
+( values -&gt; Number ) math_sum function
+  values var
+  0 total var
+  [
+    value var
+    $total $value + total set
+  ] $values each drop
+  $total
+end
+
+( values -&gt; Number ) math_average function
+  values var
+  $values empty? if
+    0
+  else
+    $values math_sum $values count /
+  end
+end
+
+( subtotal taxRate -&gt; Number ) math_add_tax function
+  taxRate var
+  subtotal var
+  $subtotal $subtotal $taxRate * +
+end
+</code></pre>
+<p>Static imports are the default when you know the module at authoring time:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>&quot;math_tools/stats&quot; import
+
+prices array
+$prices 12 push drop
+$prices 18 push drop
+$prices 30 push drop
+
+$prices math_sum println
+$prices math_average println
+120 0.08 math_add_tax println
+</code></pre>
+<p>Dynamic imports are for runtime module selection and plugin-like flows. They
+return a <code>Result</code>; the ok value is a module map:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>&quot;math_tools/stats&quot; import_dynamic value stats var
+
+args array
+$args 120 push drop
+$args 0.08 push drop
+
+$stats &quot;math_add_tax&quot; $args module_call value println
+$stats &quot;math_package_name&quot; module_get value println
+</code></pre>
+<p>Use <code>module_call</code> for functions and <code>module_get</code> for exported variables or
+classes. If you try to read a function with <code>module_get</code>, Ricochet returns a
+clear error:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>$stats &quot;math_sum&quot; module_get error &quot;message&quot; at println
+</code></pre>
+<p>Run the example from a directory that contains the example path:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>rco run examples/learn/29-packages/local_math_package/main.rco
+</code></pre>
+<p>Expected output:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>Local math package
+static sum:60
+static average:20
+static taxed:129.6
+dynamic taxed:129.6
+module label:learn-math-tools
+module function read error:module binding &quot;math_sum&quot; is a function; use module_call
+[]
+</code></pre>
+<p>The example includes a generated <code>ricochet.lock</code>. Verify it:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>rco verify examples/learn/29-packages/local_math_package
+</code></pre>
+<p>The lockfile records the dependency source, version requirement, resolved
+version, and package-content integrity hash. It is intentionally machine
+checked rather than hand edited.</p>
+<h2 id="how-to-read-the-example">How to read the example</h2>
+<p>Read package and registry examples as reproducibility workflows. A manifest says what the project needs, a lock or registry records what was resolved, and verification checks that the artifacts still match expectations.</p>
+<h2 id="try-it">Try it</h2>
+<p>Create a scratch copy of the example, remove the dependency table from
+<code>ricochet.toml</code>, then add it with the CLI:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>Push-Location examples/learn/29-packages/local_math_package
+rco add ./packages/math_tools --as math_tools --version &quot;^0.1.0&quot;
+rco install
+rco verify
+Pop-Location
+</code></pre>
+<p>Now edit <code>packages/math_tools/stats.rco</code> and run <code>rco verify</code> again. Verification
+should fail with a package integrity mismatch. When the package change is
+intentional, run <code>rco install</code> from the app directory to refresh the lock.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<ul>
+<li>Which file or command makes the workflow reproducible?</li>
+<li>What would change if a dependency version changed?</li>
+<li>Which command checks the project before you publish or consume it?</li>
+</ul>
+<h2 id="common-mistakes">Common mistakes</h2>
+<ul>
+<li>Editing lockfiles by hand.</li>
+<li>Treating dynamic import as a replacement for clear static dependencies.</li>
+<li>Using <code>..</code> in dependency paths. Dependency paths are kept inside the package
+project and parent traversal is rejected.</li>
+<li>Calling <code>module_get</code> for functions instead of <code>module_call</code>.</li>
+<li>Forgetting that dynamic imports still use resolver, containment, and lock
+integrity checks.</li>
+<li>Teaching registry publish/yank before local path dependencies are solid.</li>
+</ul>
+<h2 id="safety-notes">Safety notes</h2>
+<p>This example stays entirely local and does not fetch remote code. Do not run
+dependency examples against unreviewed registries or Git URLs until you are
+ready to inspect provenance, integrity, and lockfile changes.</p>
+<h2 id="production-guidance">Production guidance</h2>
+<p>Production dependency workflows should pin versions, review provenance, commit
+lockfiles, run <code>rco verify</code> in CI, and keep dynamic import specifiers narrow.
+Prefer static imports for ordinary app code. Use dynamic imports when the module
+name is genuinely runtime-selected and the caller is prepared to handle a
+<code>Result</code> error.</p>
+<p>Registry publishing, hosted registry yanks, static mirrors, and publish
+tokens are Chapter 30 topics. Chapter 29’s job is to make one local dependency
+boringly clear.</p>
+<h2 id="reference-links">Reference links</h2>
+<ul>
+<li><code>docs/wiki/packages.html</code></li>
+<li><code>docs/reference/guides/features.html</code></li>
+<li><code>packages/README.md</code></li>
+<li><code>examples/showcase/package_macro_queue_report</code></li>
+</ul>
+<h2 id="what-you-know-now">What you know now</h2>
+<p>You know how Ricochet projects share local code through manifests, dependency
+aliases, static package imports, dynamic runtime imports, module maps, and
+lockfile verification.</p>
+<h2 id="next-step">Next step</h2>
+<p>Continue to <a href="30-registries-publish-yank-and-mirror.html">Chapter 30: Registries, Publish, Yank, And Mirror</a>.</p>
+
+      
+    
+            
+            
+    <div class="prev-next-nav">
+        
+        <a href="../chapters/28-ai-capabilities-and-ai-package.html" class="nav-card prev">
+            <span class="nav-card-label">« Previous</span>
+            <span class="nav-card-title">Chapter 28: AI Capabilities And The AI Package</span>
+        </a>
+        
+        
+        <a href="../chapters/30-registries-publish-yank-and-mirror.html" class="nav-card next">
+            <span class="nav-card-label">Next »</span>
+            <span class="nav-card-title">Chapter 30: Registries, Publish, Yank, And Mirror</span>
+        </a>
+        
+    </div>
+    
+        </main>
+        
+        <!-- Table of Contents (Right) -->
+        <aside class="toc-container">
+            <div class="toc-title">On This Page</div>
+            <ul class="toc-list">
+                <li><a href="#why-this-chapter-matters" class="toc-link">Why this chapter matters</a></li>
+<li><a href="#what-you-will-build" class="toc-link">What you will build</a></li>
+<li><a href="#concepts-in-plain-english" class="toc-link">Concepts in plain English</a></li>
+<li><a href="#vocabulary-and-commands" class="toc-link">Vocabulary and commands</a></li>
+<li><a href="#guided-example" class="toc-link">Guided example</a></li>
+<li><a href="#how-to-read-the-example" class="toc-link">How to read the example</a></li>
+<li><a href="#try-it" class="toc-link">Try it</a></li>
+<li><a href="#check-your-understanding" class="toc-link">Check your understanding</a></li>
+<li><a href="#common-mistakes" class="toc-link">Common mistakes</a></li>
+<li><a href="#safety-notes" class="toc-link">Safety notes</a></li>
+<li><a href="#production-guidance" class="toc-link">Production guidance</a></li>
+<li><a href="#reference-links" class="toc-link">Reference links</a></li>
+<li><a href="#what-you-know-now" class="toc-link">What you know now</a></li>
+<li><a href="#next-step" class="toc-link">Next step</a></li>
+
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Overlay for Mobile Sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/logo.png" alt="Ricochet Logo">
+                <span class="footer-brand">RICOCHET</span>
+            </div>
+            <div class="footer-copyright">&copy; 2026 Ricochet Language Project. Released under the MIT License.</div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Mobile Sidebar Toggle
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar-nav');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        if (toggleBtn && sidebar && overlay) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        }
+
+        // Sidebar Search Filtering
+        const searchInput = document.getElementById('sidebar-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase().trim();
+                const items = document.querySelectorAll('#sidebar-nav ul li');
+                
+                items.forEach(li => {
+                    const a = li.querySelector('a');
+                    if (a && a.textContent.toLowerCase().includes(query)) {
+                        li.style.display = '';
+                    } else {
+                        li.style.display = 'none';
+                    }
+                });
+
+                const lists = document.querySelectorAll('#sidebar-nav ul');
+                lists.forEach(ul => {
+                    let hasVisible = false;
+                    ul.querySelectorAll('li').forEach(li => {
+                        if (li.style.display !== 'none') {
+                            hasVisible = true;
+                        }
+                    });
+                    const header = ul.previousElementSibling;
+                    if (hasVisible) {
+                        ul.style.display = '';
+                        if (header && header.tagName === 'H2') header.style.display = '';
+                    } else {
+                        ul.style.display = 'none';
+                        if (header && header.tagName === 'H2') header.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Intersection Observer for TOC Active Highlighting
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -40% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                if (!id) return;
+                const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+                if (!tocLink) return;
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                    tocLink.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('main h2').forEach(h2 => {
+            observer.observe(h2);
+        });
+    </script>
+</body>
+</html>

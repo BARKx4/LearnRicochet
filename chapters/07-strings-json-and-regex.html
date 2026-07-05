@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 07: Strings, JSON, and Regex | Learn Ricochet</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn Ricochet — A comprehensive guide to Ricochet, a modern, pure-postfix, stack-based programming language.">
+    <meta name="keywords" content="Ricochet, programming language, Forth, postfix, concatenative, stack-based, bytecode VM, OOP, web MVC, PostgreSQL">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="https://try.ricochet.today" class="brand">
+                <img src="../assets/logo.png" alt="Ricochet Logo" class="brand-logo">
+                <span class="brand-name">RICOCHET</span>
+                <span class="brand-sub">LEARN</span>
+            </a>
+            <nav class="nav-links-wrapper">
+                <ul class="nav-links">
+                    <li><a href="https://try.ricochet.today#features" class="nav-link">Features</a></li>
+                    <li><a href="https://try.ricochet.today#playground" class="nav-link">Playground</a></li>
+                    <li><a href="https://try.ricochet.today/reference.html" class="nav-link">Docs</a></li>
+                    <li><a href="../index.html" class="nav-link" style="color: var(--text-primary);">Guide</a></li>
+                    <li><a href="https://github.com/BARKx4/Ricochet" target="_blank" class="nav-link">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="nav-cta" onclick="window.location.href='https://try.ricochet.today#playground'">TRY PLAYGROUND</button>
+            <button class="mobile-menu-btn" id="mobile-menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar-nav">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="sidebar-search" class="search-input" placeholder="Search topics...">
+            </div>
+            
+            <h2>Start</h2>
+<ul>
+  <li><a href="../index.html">Learn Ricochet</a></li>
+  <li><a href="../manual-map.html">Learn Ricochet Manual Map</a></li>
+</ul>
+<h2>Start Here</h2>
+<ul>
+  <li><a href="../start-here/00-what-is-ricochet-for.html">What Ricochet Is For</a></li>
+  <li><a href="../start-here/01-how-postfix-reads.html">How Postfix Reads</a></li>
+  <li><a href="../start-here/02-the-stack-as-a-workbench.html">The Stack as a Workbench</a></li>
+  <li><a href="../start-here/03-how-to-use-this-guide.html">How to Use This Guide</a></li>
+</ul>
+<h2>Chapters</h2>
+<ul>
+  <li><a href="../chapters/00-orientation.html">Chapter 00: Welcome to Ricochet</a></li>
+  <li><a href="../chapters/01-hello-world.html">Chapter 01: Your First Program</a></li>
+  <li><a href="../chapters/02-running-ricochet.html">Chapter 02: Running Code and Getting Feedback</a></li>
+  <li><a href="../chapters/03-postfix-stack-thinking.html">Chapter 03: How Postfix Reads</a></li>
+  <li><a href="../chapters/04-values-and-literals.html">Chapter 04: Values, Literals, and Inspection</a></li>
+  <li><a href="../chapters/05-bindings-and-data.html">Chapter 05: Names, Bindings, and Small Data</a></li>
+  <li><a href="../chapters/06-numbers-math-and-truth.html">Chapter 06: Numbers, Math, and Truth</a></li>
+  <li><a href="../chapters/07-strings-json-and-regex.html" aria-current="page" class="active">Chapter 07: Strings, JSON, and Regex</a></li>
+  <li><a href="../chapters/08-collections.html">Chapter 08: Collections</a></li>
+  <li><a href="../chapters/09-results-and-errors.html">Chapter 09: Results and Errors</a></li>
+  <li><a href="../chapters/10-control-flow-functions-and-blocks.html">Chapter 10: Making Decisions and Reusing Code</a></li>
+  <li><a href="../chapters/11-oop-and-dispatch.html">Chapter 11: OOP and Dispatch</a></li>
+  <li><a href="../chapters/12-testing-linting-and-formatting.html">Chapter 12: Testing, Linting, and Formatting</a></li>
+  <li><a href="../chapters/13-introspection-and-debug-basics.html">Chapter 13: Introspection And Debug Basics</a></li>
+  <li><a href="../chapters/14-date-time-and-duration.html">Chapter 14: Date, Time, And Duration</a></li>
+  <li><a href="../chapters/15-async-and-tasks.html">Chapter 15: Async And Tasks</a></li>
+  <li><a href="../chapters/16-capabilities-and-sandboxing.html">Chapter 16: Capabilities And Sandboxing</a></li>
+  <li><a href="../chapters/17-files-workspaces-env-and-secrets.html">Chapter 17: Files, Workspaces, Environment, Config, And Secrets</a></li>
+  <li><a href="../chapters/18-http-and-streams.html">Chapter 18: HTTP And Streams</a></li>
+  <li><a href="../chapters/19-tcp-and-websocket-sockets.html">Chapter 19: TCP And WebSocket Sockets</a></li>
+  <li><a href="../chapters/20-processes-and-ptys.html">Chapter 20: Processes And PTYs</a></li>
+  <li><a href="../chapters/21-terminal-ui.html">Chapter 21: Terminal UI</a></li>
+  <li><a href="../chapters/22-webview-and-desktop-gui.html">Chapter 22: Webview And Desktop GUI</a></li>
+  <li><a href="../chapters/23-mvc-first-app.html">Chapter 23: MVC First App</a></li>
+  <li><a href="../chapters/24-routes-controllers-and-responses.html">Chapter 24: Routes, Controllers, And Responses</a></li>
+  <li><a href="../chapters/25-templates-static-assets-and-uploads.html">Chapter 25: Templates, Static Assets, And Uploads</a></li>
+  <li><a href="../chapters/26-data-active-record-and-migrations.html">Chapter 26: Data, Active Record, And Migrations</a></li>
+  <li><a href="../chapters/27-sessions-forms-auth-and-passwords.html">Chapter 27: Sessions, Forms, Auth, And Passwords</a></li>
+  <li><a href="../chapters/28-ai-capabilities-and-ai-package.html">Chapter 28: AI Capabilities And The AI Package</a></li>
+  <li><a href="../chapters/29-packages-imports-and-dependencies.html">Chapter 29: Packages, Imports, And Dependencies</a></li>
+  <li><a href="../chapters/30-registries-publish-yank-and-mirror.html">Chapter 30: Registries, Publish, Yank, And Mirror</a></li>
+  <li><a href="../chapters/31-macros-and-expansion.html">Chapter 31: Macros And Expansion</a></li>
+  <li><a href="../chapters/32-debugger-dap-lsp-and-editor-tools.html">Chapter 32: Debugger, DAP, LSP, And Editor Tools</a></li>
+  <li><a href="../chapters/33-bytecode-images-and-source-emission.html">Chapter 33: Bytecode, Images, And Source Emission</a></li>
+  <li><a href="../chapters/34-packaging-release-and-updates.html">Chapter 34: Packaging, Release, And Updates</a></li>
+  <li><a href="../chapters/35-capstone-cli-tool.html">Chapter 35: Capstone CLI Tool</a></li>
+  <li><a href="../chapters/36-capstone-tui-dashboard.html">Chapter 36: Capstone TUI Dashboard</a></li>
+  <li><a href="../chapters/37-capstone-mvc-app.html">Chapter 37: Capstone MVC App</a></li>
+  <li><a href="../chapters/38-capstone-packaged-gui-app.html">Chapter 38: Capstone Packaged GUI App</a></li>
+</ul>
+<h2>Concepts</h2>
+<ul>
+  <li><a href="../concepts/application-surfaces.html">Concept: Application Surfaces</a></li>
+  <li><a href="../concepts/bindings-vs-stack-juggling.html">Concept: Bindings vs. Stack Juggling</a></li>
+  <li><a href="../concepts/capabilities-and-sandboxing.html">Concept: Capabilities and Sandboxing</a></li>
+  <li><a href="../concepts/postfix-evaluation.html">Concept: Postfix Evaluation</a></li>
+  <li><a href="../concepts/results-and-errors.html">Concept: Results and Errors</a></li>
+  <li><a href="../concepts/stack-effects.html">Concept: Stack Effects</a></li>
+</ul>
+<h2>How-To</h2>
+<ul>
+  <li><a href="../how-to/choose-a-data-shape.html">How to Choose a Data Shape</a></li>
+  <li><a href="../how-to/install-and-run.html">How to Install and Run Ricochet</a></li>
+  <li><a href="../how-to/read-diagnostics.html">How to Read Diagnostics</a></li>
+  <li><a href="../how-to/use-examples.html">How to Use the Examples</a></li>
+</ul>
+<h2>Appendices</h2>
+<ul>
+  <li><a href="../appendices/a-word-catalog.html">Appendix A: Word Groups at a Glance</a></li>
+  <li><a href="../appendices/b-cli-command-catalog.html">Appendix B: CLI Command Catalog</a></li>
+  <li><a href="../appendices/c-capability-flags.html">Appendix C: Capability Flags</a></li>
+  <li><a href="../appendices/d-syntax-guardrails.html">Appendix D: Syntax Guardrails</a></li>
+  <li><a href="../appendices/e-troubleshooting.html">Appendix E: Troubleshooting</a></li>
+  <li><a href="../appendices/f-glossary.html">Appendix F: Glossary</a></li>
+</ul>
+
+        </nav>
+        
+        <!-- Main Content -->
+        <main>
+            
+      <h1>Chapter 07: Strings, JSON, and Regex</h1>
+<h2 id="why-this-chapter-matters">Why this chapter matters</h2>
+<p>Most useful programs cross text boundaries: command output, config files, logs, HTTP payloads, form fields, templates, and package metadata. This chapter teaches a practical order: use direct string words first, JSON words at structured boundaries, and regex only when pattern matching is truly the right tool.</p>
+<h2 id="what-you-will-build">What you will build</h2>
+<p>You will build a small log-cleaning workflow that cleans text, moves through JSON, and uses a regex for the one part direct string words do not express.</p>
+<h2 id="concepts-in-plain-english">Concepts in plain English</h2>
+<p>A string is text. JSON is a text format for structured data. A regex is a compact pattern language for matching text. Regex is powerful, but direct words such as <code>trim</code>, <code>split</code>, <code>contains?</code>, <code>starts_with?</code>, and <code>replace</code> are usually easier to read.</p>
+<h2 id="words-introduced">Words introduced</h2>
+<p>Primary words: <code>trim</code>, <code>trim_start</code>, <code>trim_end</code>, <code>blank?</code>, <code>slice</code>, <code>index_of</code>, <code>last_index_of</code>, <code>repeat</code>, <code>lines</code>, <code>chars</code>, <code>split</code>, <code>replace</code>, <code>contains?</code>, <code>starts_with?</code>, <code>ends_with?</code>, <code>uppercase</code>, <code>lowercase</code>, <code>concat</code>, <code>to_string</code>, <code>json_encode</code>, <code>json_decode</code>, <code>regex</code>, <code>matches?</code>, <code>regex_find</code>, <code>regex_replace</code>, and <code>captures</code>.</p>
+<h2 id="guided-example">Guided example</h2>
+<p>Run the log cleaner:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">bash</span><code class="language-bash">rco run examples/learn/07-strings-json-and-regex/log-cleaner.rco
+</code></pre>
+<p>The first half uses direct string words:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">ricochet</span><code class="language-rco">&quot;  warn: user=ada  &quot; trim cleaned var
+$cleaned uppercase println
+$cleaned &quot;user=&quot; contains? println
+$cleaned &quot;:&quot; split count println
+</code></pre>
+<p>The JSON section turns a Ricochet map into a JSON string and back:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">ricochet</span><code class="language-rco">payload map
+$payload &quot;ok&quot; true put drop
+$payload &quot;name&quot; &quot;Ada&quot; put drop
+$payload json_encode json var
+$json json_decode value &quot;name&quot; at println
+</code></pre>
+<p>Regex work follows the same result habit:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">ricochet</span><code class="language-rco">&quot;\\d+&quot; regex value digits var
+&quot;ticket-42&quot; $digits regex_find &quot;text&quot; at println
+$digits &quot;ticket-42&quot; &quot;#&quot; regex_replace println
+</code></pre>
+<h2 id="how-to-read-the-code">How to read the code</h2>
+<p><code>&quot;  warn: user=ada  &quot; trim cleaned var</code> starts with a raw string, trims whitespace, and names the cleaned result. The later lines read <code>$cleaned</code> instead of repeating the cleanup pipeline.</p>
+<p><code>json_decode</code> returns a <code>Result</code>. The example unwraps with <code>value</code> because the JSON was produced by <code>json_encode</code> immediately before. When JSON comes from a file, request, or user input, check <code>ok?</code> before unwrapping.</p>
+<h2 id="try-it">Try it</h2>
+<p>Try these direct string words before reaching for regex:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">ricochet</span><code class="language-rco">&quot;Ricochet&quot; 0 4 slice println
+&quot;Ada\nGrace&quot; lines count println
+&quot;abc&quot; chars &quot;,&quot; join println
+&quot;warning&quot; &quot;warn&quot; starts_with? println
+</code></pre>
+<p>Then intentionally decode bad JSON and inspect the error:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">ricochet</span><code class="language-rco">&quot;not json&quot; json_decode error &quot;kind&quot; at println
+</code></pre>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<ul>
+<li>Use <code>trim</code> to clean edges before comparing text.</li>
+<li>Use <code>split</code> and <code>lines</code> for simple structure.</li>
+<li>Use <code>json_decode</code> at data boundaries and handle its <code>Result</code>.</li>
+<li>Use regex when direct string words cannot express the pattern clearly.</li>
+</ul>
+<h2 id="common-mistakes">Common mistakes</h2>
+<ul>
+<li>Treating JSON parse failure as an exception instead of a result path.</li>
+<li>Using regex where direct string words are simpler.</li>
+<li>Forgetting to escape backslashes in regex strings.</li>
+<li>Assuming <code>concat</code> is the only way to join text. Collections can use <code>join</code>.</li>
+</ul>
+<h2 id="what-you-know-now">What you know now</h2>
+<p>You can process text, encode and decode structured payloads, and keep regex work explicit and result-checked.</p>
+
+      
+    
+            
+            
+    <div class="prev-next-nav">
+        
+        <a href="../chapters/06-numbers-math-and-truth.html" class="nav-card prev">
+            <span class="nav-card-label">« Previous</span>
+            <span class="nav-card-title">Chapter 06: Numbers, Math, and Truth</span>
+        </a>
+        
+        
+        <a href="../chapters/08-collections.html" class="nav-card next">
+            <span class="nav-card-label">Next »</span>
+            <span class="nav-card-title">Chapter 08: Collections</span>
+        </a>
+        
+    </div>
+    
+        </main>
+        
+        <!-- Table of Contents (Right) -->
+        <aside class="toc-container">
+            <div class="toc-title">On This Page</div>
+            <ul class="toc-list">
+                <li><a href="#why-this-chapter-matters" class="toc-link">Why this chapter matters</a></li>
+<li><a href="#what-you-will-build" class="toc-link">What you will build</a></li>
+<li><a href="#concepts-in-plain-english" class="toc-link">Concepts in plain English</a></li>
+<li><a href="#words-introduced" class="toc-link">Words introduced</a></li>
+<li><a href="#guided-example" class="toc-link">Guided example</a></li>
+<li><a href="#how-to-read-the-code" class="toc-link">How to read the code</a></li>
+<li><a href="#try-it" class="toc-link">Try it</a></li>
+<li><a href="#check-your-understanding" class="toc-link">Check your understanding</a></li>
+<li><a href="#common-mistakes" class="toc-link">Common mistakes</a></li>
+<li><a href="#what-you-know-now" class="toc-link">What you know now</a></li>
+
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Overlay for Mobile Sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/logo.png" alt="Ricochet Logo">
+                <span class="footer-brand">RICOCHET</span>
+            </div>
+            <div class="footer-copyright">&copy; 2026 Ricochet Language Project. Released under the MIT License.</div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Mobile Sidebar Toggle
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar-nav');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        if (toggleBtn && sidebar && overlay) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        }
+
+        // Sidebar Search Filtering
+        const searchInput = document.getElementById('sidebar-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase().trim();
+                const items = document.querySelectorAll('#sidebar-nav ul li');
+                
+                items.forEach(li => {
+                    const a = li.querySelector('a');
+                    if (a && a.textContent.toLowerCase().includes(query)) {
+                        li.style.display = '';
+                    } else {
+                        li.style.display = 'none';
+                    }
+                });
+
+                const lists = document.querySelectorAll('#sidebar-nav ul');
+                lists.forEach(ul => {
+                    let hasVisible = false;
+                    ul.querySelectorAll('li').forEach(li => {
+                        if (li.style.display !== 'none') {
+                            hasVisible = true;
+                        }
+                    });
+                    const header = ul.previousElementSibling;
+                    if (hasVisible) {
+                        ul.style.display = '';
+                        if (header && header.tagName === 'H2') header.style.display = '';
+                    } else {
+                        ul.style.display = 'none';
+                        if (header && header.tagName === 'H2') header.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Intersection Observer for TOC Active Highlighting
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -40% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                if (!id) return;
+                const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+                if (!tocLink) return;
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                    tocLink.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('main h2').forEach(h2 => {
+            observer.observe(h2);
+        });
+    </script>
+</body>
+</html>

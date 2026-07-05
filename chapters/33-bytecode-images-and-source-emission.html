@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 33: Bytecode, Images, And Source Emission | Learn Ricochet</title>
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="Learn Ricochet — A comprehensive guide to Ricochet, a modern, pure-postfix, stack-based programming language.">
+    <meta name="keywords" content="Ricochet, programming language, Forth, postfix, concatenative, stack-based, bytecode VM, OOP, web MVC, PostgreSQL">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+    <!-- Header Navigation -->
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="https://try.ricochet.today" class="brand">
+                <img src="../assets/logo.png" alt="Ricochet Logo" class="brand-logo">
+                <span class="brand-name">RICOCHET</span>
+                <span class="brand-sub">LEARN</span>
+            </a>
+            <nav class="nav-links-wrapper">
+                <ul class="nav-links">
+                    <li><a href="https://try.ricochet.today#features" class="nav-link">Features</a></li>
+                    <li><a href="https://try.ricochet.today#playground" class="nav-link">Playground</a></li>
+                    <li><a href="https://try.ricochet.today/reference.html" class="nav-link">Docs</a></li>
+                    <li><a href="../index.html" class="nav-link" style="color: var(--text-primary);">Guide</a></li>
+                    <li><a href="https://github.com/BARKx4/Ricochet" target="_blank" class="nav-link">GitHub</a></li>
+                </ul>
+            </nav>
+            <button class="nav-cta" onclick="window.location.href='https://try.ricochet.today#playground'">TRY PLAYGROUND</button>
+            <button class="mobile-menu-btn" id="mobile-menu-toggle">☰</button>
+        </div>
+    </header>
+
+    <div class="layout">
+        <!-- Sidebar Navigation -->
+        <nav id="sidebar-nav">
+            <div class="search-container">
+                <span class="search-icon">🔍</span>
+                <input type="text" id="sidebar-search" class="search-input" placeholder="Search topics...">
+            </div>
+            
+            <h2>Start</h2>
+<ul>
+  <li><a href="../index.html">Learn Ricochet</a></li>
+  <li><a href="../manual-map.html">Learn Ricochet Manual Map</a></li>
+</ul>
+<h2>Start Here</h2>
+<ul>
+  <li><a href="../start-here/00-what-is-ricochet-for.html">What Ricochet Is For</a></li>
+  <li><a href="../start-here/01-how-postfix-reads.html">How Postfix Reads</a></li>
+  <li><a href="../start-here/02-the-stack-as-a-workbench.html">The Stack as a Workbench</a></li>
+  <li><a href="../start-here/03-how-to-use-this-guide.html">How to Use This Guide</a></li>
+</ul>
+<h2>Chapters</h2>
+<ul>
+  <li><a href="../chapters/00-orientation.html">Chapter 00: Welcome to Ricochet</a></li>
+  <li><a href="../chapters/01-hello-world.html">Chapter 01: Your First Program</a></li>
+  <li><a href="../chapters/02-running-ricochet.html">Chapter 02: Running Code and Getting Feedback</a></li>
+  <li><a href="../chapters/03-postfix-stack-thinking.html">Chapter 03: How Postfix Reads</a></li>
+  <li><a href="../chapters/04-values-and-literals.html">Chapter 04: Values, Literals, and Inspection</a></li>
+  <li><a href="../chapters/05-bindings-and-data.html">Chapter 05: Names, Bindings, and Small Data</a></li>
+  <li><a href="../chapters/06-numbers-math-and-truth.html">Chapter 06: Numbers, Math, and Truth</a></li>
+  <li><a href="../chapters/07-strings-json-and-regex.html">Chapter 07: Strings, JSON, and Regex</a></li>
+  <li><a href="../chapters/08-collections.html">Chapter 08: Collections</a></li>
+  <li><a href="../chapters/09-results-and-errors.html">Chapter 09: Results and Errors</a></li>
+  <li><a href="../chapters/10-control-flow-functions-and-blocks.html">Chapter 10: Making Decisions and Reusing Code</a></li>
+  <li><a href="../chapters/11-oop-and-dispatch.html">Chapter 11: OOP and Dispatch</a></li>
+  <li><a href="../chapters/12-testing-linting-and-formatting.html">Chapter 12: Testing, Linting, and Formatting</a></li>
+  <li><a href="../chapters/13-introspection-and-debug-basics.html">Chapter 13: Introspection And Debug Basics</a></li>
+  <li><a href="../chapters/14-date-time-and-duration.html">Chapter 14: Date, Time, And Duration</a></li>
+  <li><a href="../chapters/15-async-and-tasks.html">Chapter 15: Async And Tasks</a></li>
+  <li><a href="../chapters/16-capabilities-and-sandboxing.html">Chapter 16: Capabilities And Sandboxing</a></li>
+  <li><a href="../chapters/17-files-workspaces-env-and-secrets.html">Chapter 17: Files, Workspaces, Environment, Config, And Secrets</a></li>
+  <li><a href="../chapters/18-http-and-streams.html">Chapter 18: HTTP And Streams</a></li>
+  <li><a href="../chapters/19-tcp-and-websocket-sockets.html">Chapter 19: TCP And WebSocket Sockets</a></li>
+  <li><a href="../chapters/20-processes-and-ptys.html">Chapter 20: Processes And PTYs</a></li>
+  <li><a href="../chapters/21-terminal-ui.html">Chapter 21: Terminal UI</a></li>
+  <li><a href="../chapters/22-webview-and-desktop-gui.html">Chapter 22: Webview And Desktop GUI</a></li>
+  <li><a href="../chapters/23-mvc-first-app.html">Chapter 23: MVC First App</a></li>
+  <li><a href="../chapters/24-routes-controllers-and-responses.html">Chapter 24: Routes, Controllers, And Responses</a></li>
+  <li><a href="../chapters/25-templates-static-assets-and-uploads.html">Chapter 25: Templates, Static Assets, And Uploads</a></li>
+  <li><a href="../chapters/26-data-active-record-and-migrations.html">Chapter 26: Data, Active Record, And Migrations</a></li>
+  <li><a href="../chapters/27-sessions-forms-auth-and-passwords.html">Chapter 27: Sessions, Forms, Auth, And Passwords</a></li>
+  <li><a href="../chapters/28-ai-capabilities-and-ai-package.html">Chapter 28: AI Capabilities And The AI Package</a></li>
+  <li><a href="../chapters/29-packages-imports-and-dependencies.html">Chapter 29: Packages, Imports, And Dependencies</a></li>
+  <li><a href="../chapters/30-registries-publish-yank-and-mirror.html">Chapter 30: Registries, Publish, Yank, And Mirror</a></li>
+  <li><a href="../chapters/31-macros-and-expansion.html">Chapter 31: Macros And Expansion</a></li>
+  <li><a href="../chapters/32-debugger-dap-lsp-and-editor-tools.html">Chapter 32: Debugger, DAP, LSP, And Editor Tools</a></li>
+  <li><a href="../chapters/33-bytecode-images-and-source-emission.html" aria-current="page" class="active">Chapter 33: Bytecode, Images, And Source Emission</a></li>
+  <li><a href="../chapters/34-packaging-release-and-updates.html">Chapter 34: Packaging, Release, And Updates</a></li>
+  <li><a href="../chapters/35-capstone-cli-tool.html">Chapter 35: Capstone CLI Tool</a></li>
+  <li><a href="../chapters/36-capstone-tui-dashboard.html">Chapter 36: Capstone TUI Dashboard</a></li>
+  <li><a href="../chapters/37-capstone-mvc-app.html">Chapter 37: Capstone MVC App</a></li>
+  <li><a href="../chapters/38-capstone-packaged-gui-app.html">Chapter 38: Capstone Packaged GUI App</a></li>
+</ul>
+<h2>Concepts</h2>
+<ul>
+  <li><a href="../concepts/application-surfaces.html">Concept: Application Surfaces</a></li>
+  <li><a href="../concepts/bindings-vs-stack-juggling.html">Concept: Bindings vs. Stack Juggling</a></li>
+  <li><a href="../concepts/capabilities-and-sandboxing.html">Concept: Capabilities and Sandboxing</a></li>
+  <li><a href="../concepts/postfix-evaluation.html">Concept: Postfix Evaluation</a></li>
+  <li><a href="../concepts/results-and-errors.html">Concept: Results and Errors</a></li>
+  <li><a href="../concepts/stack-effects.html">Concept: Stack Effects</a></li>
+</ul>
+<h2>How-To</h2>
+<ul>
+  <li><a href="../how-to/choose-a-data-shape.html">How to Choose a Data Shape</a></li>
+  <li><a href="../how-to/install-and-run.html">How to Install and Run Ricochet</a></li>
+  <li><a href="../how-to/read-diagnostics.html">How to Read Diagnostics</a></li>
+  <li><a href="../how-to/use-examples.html">How to Use the Examples</a></li>
+</ul>
+<h2>Appendices</h2>
+<ul>
+  <li><a href="../appendices/a-word-catalog.html">Appendix A: Word Groups at a Glance</a></li>
+  <li><a href="../appendices/b-cli-command-catalog.html">Appendix B: CLI Command Catalog</a></li>
+  <li><a href="../appendices/c-capability-flags.html">Appendix C: Capability Flags</a></li>
+  <li><a href="../appendices/d-syntax-guardrails.html">Appendix D: Syntax Guardrails</a></li>
+  <li><a href="../appendices/e-troubleshooting.html">Appendix E: Troubleshooting</a></li>
+  <li><a href="../appendices/f-glossary.html">Appendix F: Glossary</a></li>
+</ul>
+
+        </nav>
+        
+        <!-- Main Content -->
+        <main>
+            
+      <h1>Chapter 33: Bytecode, Images, And Source Emission</h1>
+<blockquote>
+<p>Part V: Packages, Registries, Macros, Tooling, and Release</p>
+</blockquote>
+<h2 id="why-this-chapter-matters">Why this chapter matters</h2>
+<p>Bytecode and images are runtime artifacts. Understanding them helps you separate source, compiled code, saved VM state, and emitted source views.</p>
+<h2 id="what-you-will-build">What you will build</h2>
+<p>You will build an image lab for compiled and persistent runtime artifacts. The
+example script creates ordinary language state, compiles to bytecode, runs that
+bytecode, saves a VM image after running the source file, inspects the image,
+and emits readable source-like text from the bytecode.</p>
+<h2 id="concepts-in-plain-english">Concepts in plain English</h2>
+<p>Bytecode is compiled code. An image is saved VM state. Source emission is a readable representation produced from bytecode.</p>
+<p>The chapter uses these concepts:</p>
+<ul>
+<li>Bytecode build and run commands.</li>
+<li>REPL images, save/load, and binding inspection.</li>
+<li>Source emission as readable output rather than exact reconstruction.</li>
+<li>Image safety boundaries for retained resources and sensitive values.</li>
+</ul>
+<h2 id="vocabulary-and-commands">Vocabulary and commands</h2>
+<p>Primary coverage: <code>rco build</code>, <code>.rcob</code> bytecode files, <code>rco run-bytecode</code>,
+<code>rco image save</code>, <code>rco image inspect</code>, <code>rco image inspect --json</code>, and
+<code>rco emit-source</code>.</p>
+<h2 id="guided-example">Guided example</h2>
+<p>Open <code>examples/learn/33-bytecode-images-and-source-emission/image_lab.rco</code>:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>&quot;Image lab&quot; println
+
+&quot;ada&quot; user_name var
+$user_name uppercase user_code var
+
+scores array
+$scores 10 push drop
+$scores 20 push drop
+$scores 12 push drop
+
+( values -&gt; Number ) lab_sum function
+  values var
+  0 total var
+  [
+    value var
+    $total $value + total set
+  ] $values each drop
+  $total
+end
+
+$scores lab_sum score_total var
+
+&quot;user:&quot; print
+$user_code println
+
+&quot;score total:&quot; print
+$score_total println
+</code></pre>
+<p>The lab runner builds, runs, saves, inspects, and emits in order:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>powershell -ExecutionPolicy Bypass -File examples/learn/33-bytecode-images-and-source-emission/run-lab.ps1
+</code></pre>
+<p>The runner changes into the example directory before calling the CLI, so
+generated files stay local to the lab:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>rco build image_lab.rco
+rco run-bytecode build/app.rcob
+rco image save session.rci --source image_lab.rco
+rco image inspect session.rci
+rco emit-source build/app.rcob
+</code></pre>
+<p>The first command writes <code>build/app.rcob</code>:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>built build/app.rcob
+</code></pre>
+<p>Running the bytecode should match the source program:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>Image lab
+user:ADA
+score total:42
+[]
+</code></pre>
+<p><code>image save --source</code> runs the source file first, then stores safe VM state:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>saved image session.rci (4 bindings, 1 functions, 0 classes)
+</code></pre>
+<p><code>image inspect</code> shows the preserved names:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>format ricochet-vm-image
+format_version 1
+ricochet_version 0.1.19-rc.4
+stack 0
+variables score_total, scores, user_code, user_name
+functions lab_sum
+classes
+</code></pre>
+<p>Use JSON for tooling:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>rco image inspect session.rci --json
+</code></pre>
+<p><code>emit-source</code> is a readable view over compiled bytecode:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>rco emit-source build/app.rcob
+</code></pre>
+<p>The output starts with a provenance comment:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>(( emitted from bytecode chunk &quot;image_lab.rco&quot; ))
+&quot;Image lab&quot;
+println
+</code></pre>
+<p>Do not expect emitted source to be the original file. It may show lower-level
+operations such as <code>&quot;user_name&quot; get</code> because it is explaining bytecode, not
+preserving author formatting.</p>
+<h2 id="how-to-read-the-example">How to read the example</h2>
+<p>Read artifact examples by separating source from output. Source files are what you edit. Bytecode, images, packages, and update metadata are generated artifacts with their own verification steps.</p>
+<h2 id="try-it">Try it</h2>
+<p>Run only the bytecode steps:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>Push-Location examples/learn/33-bytecode-images-and-source-emission
+rco build image_lab.rco
+rco run-bytecode build/app.rcob
+Pop-Location
+</code></pre>
+<p>Inspect the image as JSON:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>Push-Location examples/learn/33-bytecode-images-and-source-emission
+rco image inspect session.rci --json
+Pop-Location
+</code></pre>
+<p>Experiment in the REPL with an image path:</p>
+<pre><span class="code-dots"><span class="code-dot red"></span><span class="code-dot yellow"></span><span class="code-dot green"></span></span><span class="code-lang-tag">code</span><code>rco repl --image scratch-session.rci
+</code></pre>
+<p>Inside the REPL, use <code>:bindings</code>, <code>:save</code>, <code>:save other.rci</code>, and
+<code>:load other.rci</code> to manage checkpoints.</p>
+<h2 id="check-your-understanding">Check your understanding</h2>
+<ul>
+<li>What new value shape, command, or host boundary did this chapter introduce?</li>
+<li>Which line is most important to trace with a stack diagram?</li>
+<li>Where would you add a binding to make the example easier to read?</li>
+</ul>
+<h2 id="common-mistakes">Common mistakes</h2>
+<ul>
+<li>Treating emitted source as the original file.</li>
+<li>Assuming every retained runtime resource belongs in a saved image.</li>
+<li>Building from a directory that contains the example path and wondering why <code>build/app.rcob</code> appears there.
+Run build commands from the project or example directory you want to own the
+artifact.</li>
+<li>Committing regenerated bytecode or image files without checking whether they
+are meant to be source artifacts. This lab ignores <code>build/</code> and <code>session.rci</code>
+because they are reproducible outputs.</li>
+<li>Expecting images to save process-local handles such as tasks, streams,
+sockets, processes, PTYs, active approvals, or literal secret references.</li>
+</ul>
+<h2 id="safety-notes">Safety notes</h2>
+<p>Images are VM-state snapshots, not operating-system process snapshots. They
+preserve ordinary language state such as nil, booleans, numbers, strings,
+arrays, lists, maps, sets, classes, instances, blocks, functions, and results.
+They reject process-local or sensitive state rather than silently dropping it.</p>
+<p>Review emitted source and image inspection output before sharing. They can
+include binding names and values that were safe to serialize but still private
+to your application.</p>
+<h2 id="production-guidance">Production guidance</h2>
+<p>Production artifact workflows should preserve version metadata, source inputs,
+build commands, self-check commands, and expected runtime capabilities. Use
+<code>run-bytecode --trace-file</code> when you need debugger events from a compiled
+artifact, and use <code>emit-source</code> for inspection or recovery workflows, not as a
+source-code formatter.</p>
+<h2 id="reference-links">Reference links</h2>
+<ul>
+<li><code>docs/reference/guides/images-source.html</code></li>
+<li><code>docs/wiki/language-runtime.html</code></li>
+<li><code>docs/reference/guides/features.html</code></li>
+<li><code>docs/debugger-integrations.html</code></li>
+</ul>
+<h2 id="what-you-know-now">What you know now</h2>
+<p>You know how Ricochet exposes compiled artifacts and persistent runtime state:
+build bytecode, run bytecode, save and inspect VM images, use REPL image
+checkpoints, and emit readable source-like bytecode views.</p>
+<h2 id="next-step">Next step</h2>
+<p>Continue to <a href="34-packaging-release-and-updates.html">Chapter 34: Packaging, Release, And Updates</a>.</p>
+
+      
+    
+            
+            
+    <div class="prev-next-nav">
+        
+        <a href="../chapters/32-debugger-dap-lsp-and-editor-tools.html" class="nav-card prev">
+            <span class="nav-card-label">« Previous</span>
+            <span class="nav-card-title">Chapter 32: Debugger, DAP, LSP, And Editor Tools</span>
+        </a>
+        
+        
+        <a href="../chapters/34-packaging-release-and-updates.html" class="nav-card next">
+            <span class="nav-card-label">Next »</span>
+            <span class="nav-card-title">Chapter 34: Packaging, Release, And Updates</span>
+        </a>
+        
+    </div>
+    
+        </main>
+        
+        <!-- Table of Contents (Right) -->
+        <aside class="toc-container">
+            <div class="toc-title">On This Page</div>
+            <ul class="toc-list">
+                <li><a href="#why-this-chapter-matters" class="toc-link">Why this chapter matters</a></li>
+<li><a href="#what-you-will-build" class="toc-link">What you will build</a></li>
+<li><a href="#concepts-in-plain-english" class="toc-link">Concepts in plain English</a></li>
+<li><a href="#vocabulary-and-commands" class="toc-link">Vocabulary and commands</a></li>
+<li><a href="#guided-example" class="toc-link">Guided example</a></li>
+<li><a href="#how-to-read-the-example" class="toc-link">How to read the example</a></li>
+<li><a href="#try-it" class="toc-link">Try it</a></li>
+<li><a href="#check-your-understanding" class="toc-link">Check your understanding</a></li>
+<li><a href="#common-mistakes" class="toc-link">Common mistakes</a></li>
+<li><a href="#safety-notes" class="toc-link">Safety notes</a></li>
+<li><a href="#production-guidance" class="toc-link">Production guidance</a></li>
+<li><a href="#reference-links" class="toc-link">Reference links</a></li>
+<li><a href="#what-you-know-now" class="toc-link">What you know now</a></li>
+<li><a href="#next-step" class="toc-link">Next step</a></li>
+
+            </ul>
+        </aside>
+    </div>
+
+    <!-- Overlay for Mobile Sidebar -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="../assets/logo.png" alt="Ricochet Logo">
+                <span class="footer-brand">RICOCHET</span>
+            </div>
+            <div class="footer-copyright">&copy; 2026 Ricochet Language Project. Released under the MIT License.</div>
+        </div>
+    </footer>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Mobile Sidebar Toggle
+        const toggleBtn = document.getElementById('mobile-menu-toggle');
+        const sidebar = document.getElementById('sidebar-nav');
+        const overlay = document.getElementById('sidebar-overlay');
+
+        if (toggleBtn && sidebar && overlay) {
+            toggleBtn.addEventListener('click', () => {
+                sidebar.classList.toggle('open');
+                overlay.classList.toggle('active');
+            });
+            
+            overlay.addEventListener('click', () => {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            });
+        }
+
+        // Sidebar Search Filtering
+        const searchInput = document.getElementById('sidebar-search');
+        if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+                const query = e.target.value.toLowerCase().trim();
+                const items = document.querySelectorAll('#sidebar-nav ul li');
+                
+                items.forEach(li => {
+                    const a = li.querySelector('a');
+                    if (a && a.textContent.toLowerCase().includes(query)) {
+                        li.style.display = '';
+                    } else {
+                        li.style.display = 'none';
+                    }
+                });
+
+                const lists = document.querySelectorAll('#sidebar-nav ul');
+                lists.forEach(ul => {
+                    let hasVisible = false;
+                    ul.querySelectorAll('li').forEach(li => {
+                        if (li.style.display !== 'none') {
+                            hasVisible = true;
+                        }
+                    });
+                    const header = ul.previousElementSibling;
+                    if (hasVisible) {
+                        ul.style.display = '';
+                        if (header && header.tagName === 'H2') header.style.display = '';
+                    } else {
+                        ul.style.display = 'none';
+                        if (header && header.tagName === 'H2') header.style.display = 'none';
+                    }
+                });
+            });
+        }
+
+        // Intersection Observer for TOC Active Highlighting
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px 0px -40% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                const id = entry.target.getAttribute('id');
+                if (!id) return;
+                const tocLink = document.querySelector(`.toc-link[href="#${id}"]`);
+                if (!tocLink) return;
+                if (entry.isIntersecting) {
+                    document.querySelectorAll('.toc-link').forEach(l => l.classList.remove('active'));
+                    tocLink.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('main h2').forEach(h2 => {
+            observer.observe(h2);
+        });
+    </script>
+</body>
+</html>
