@@ -258,7 +258,7 @@ code, pre {
 /* ==========================================================================
    Left Navigation Sidebar
    ========================================================================== */
-nav {
+#sidebar-nav {
     width: var(--sidebar-width);
     flex-shrink: 0;
     background: var(--bg-surface);
@@ -272,7 +272,7 @@ nav {
 }
 
 /* Title on top of nav */
-nav h1 {
+#sidebar-nav h1 {
     display: none; /* Already in top navbar */
 }
 
@@ -311,7 +311,7 @@ nav h1 {
 }
 
 /* Sidebar lists */
-nav h2 {
+#sidebar-nav h2 {
     font-family: var(--font-heading);
     font-size: 0.75rem;
     text-transform: uppercase;
@@ -325,11 +325,11 @@ nav h2 {
     font-weight: 700;
 }
 
-nav h2:first-of-type {
+#sidebar-nav h2:first-of-type {
     margin-top: 0;
 }
 
-nav ul {
+#sidebar-nav ul {
     list-style: none;
     margin-bottom: 24px;
     display: flex;
@@ -337,7 +337,7 @@ nav ul {
     gap: 4px;
 }
 
-nav ul li a {
+#sidebar-nav ul li a {
     display: block;
     font-size: 0.85rem;
     color: var(--text-secondary);
@@ -346,14 +346,14 @@ nav ul li a {
     border-left: 2px solid transparent;
 }
 
-nav ul li a:hover {
+#sidebar-nav ul li a:hover {
     color: var(--text-primary);
     background: rgba(157, 78, 221, 0.04);
     border-left-color: var(--border-medium);
 }
 
-nav ul li a[aria-current="page"],
-nav ul li a.active {
+#sidebar-nav ul li a[aria-current="page"],
+#sidebar-nav ul li a.active {
     color: var(--text-primary);
     font-weight: 600;
     background: rgba(157, 78, 221, 0.08);
@@ -752,7 +752,7 @@ main pre code .keyword {
         position: relative;
     }
     
-    nav {
+    #sidebar-nav {
         position: fixed;
         left: calc(-1 * var(--sidebar-width));
         width: var(--sidebar-width);
@@ -762,7 +762,7 @@ main pre code .keyword {
         box-shadow: 20px 0 40px rgba(0,0,0,0.8);
     }
     
-    nav.open {
+    #sidebar-nav.open {
         left: 0;
     }
     
